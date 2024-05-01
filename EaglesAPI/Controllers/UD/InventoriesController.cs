@@ -79,21 +79,7 @@ namespace EaglesAPI.Controllers.UD
         public async Task<ActionResult<Inventory>> PostInventory(Inventory inventory)
         {
             _context.Inventories.Add(inventory);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (InventoryExists(inventory.InventoryId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetInventory", new { id = inventory.InventoryId }, inventory);
         }

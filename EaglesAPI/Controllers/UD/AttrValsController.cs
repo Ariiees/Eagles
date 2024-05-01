@@ -12,47 +12,47 @@ namespace EaglesAPI.Controllers.UD
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressesController : ControllerBase
+    public class AttrValsController : ControllerBase
     {
         private readonly EaglesOracleContext _context;
 
-        public AddressesController(EaglesOracleContext context)
+        public AttrValsController(EaglesOracleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Addresses
+        // GET: api/AttrVals
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
+        public async Task<ActionResult<IEnumerable<AttrVal>>> GetAttrVals()
         {
-            return await _context.Addresses.ToListAsync();
+            return await _context.AttrVals.ToListAsync();
         }
 
-        // GET: api/Addresses/5
+        // GET: api/AttrVals/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Address>> GetAddress(string id)
+        public async Task<ActionResult<AttrVal>> GetAttrVal(string id)
         {
-            var address = await _context.Addresses.FindAsync(id);
+            var attrVal = await _context.AttrVals.FindAsync(id);
 
-            if (address == null)
+            if (attrVal == null)
             {
                 return NotFound();
             }
 
-            return address;
+            return attrVal;
         }
 
-        // PUT: api/Addresses/5
+        // PUT: api/AttrVals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAddress(string id, Address address)
+        public async Task<IActionResult> PutAttrVal(string id, AttrVal attrVal)
         {
-            if (id != address.AddressId)
+            if (id != attrVal.AttrValId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(address).State = EntityState.Modified;
+            _context.Entry(attrVal).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace EaglesAPI.Controllers.UD
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AddressExists(id))
+                if (!AttrValExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace EaglesAPI.Controllers.UD
             return NoContent();
         }
 
-        // POST: api/Addresses
+        // POST: api/AttrVals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Address>> PostAddress(Address address)
+        public async Task<ActionResult<AttrVal>> PostAttrVal(AttrVal attrVal)
         {
-            _context.Addresses.Add(address);
+            _context.AttrVals.Add(attrVal);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAddress", new { id = address.AddressId }, address);
+            return CreatedAtAction("GetAttrVal", new { id = attrVal.AttrValId }, attrVal);
         }
 
-        // DELETE: api/Addresses/5
+        // DELETE: api/AttrVals/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAddress(string id)
+        public async Task<IActionResult> DeleteAttrVal(string id)
         {
-            var address = await _context.Addresses.FindAsync(id);
-            if (address == null)
+            var attrVal = await _context.AttrVals.FindAsync(id);
+            if (attrVal == null)
             {
                 return NotFound();
             }
 
-            _context.Addresses.Remove(address);
+            _context.AttrVals.Remove(attrVal);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AddressExists(string id)
+        private bool AttrValExists(string id)
         {
-            return _context.Addresses.Any(e => e.AddressId == id);
+            return _context.AttrVals.Any(e => e.AttrValId == id);
         }
     }
 }

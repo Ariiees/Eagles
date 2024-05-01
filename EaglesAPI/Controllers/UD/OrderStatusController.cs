@@ -79,21 +79,7 @@ namespace EaglesAPI.Controllers.UD
         public async Task<ActionResult<OrderStatus>> PostOrderStatus(OrderStatus orderStatus)
         {
             _context.OrderStatuses.Add(orderStatus);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (OrderStatusExists(orderStatus.OrderStatusId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrderStatus", new { id = orderStatus.OrderStatusId }, orderStatus);
         }

@@ -12,47 +12,47 @@ namespace EaglesAPI.Controllers.UD
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressesController : ControllerBase
+    public class AttrsController : ControllerBase
     {
         private readonly EaglesOracleContext _context;
 
-        public AddressesController(EaglesOracleContext context)
+        public AttrsController(EaglesOracleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Addresses
+        // GET: api/Attrs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
+        public async Task<ActionResult<IEnumerable<Attr>>> GetAttrs()
         {
-            return await _context.Addresses.ToListAsync();
+            return await _context.Attrs.ToListAsync();
         }
 
-        // GET: api/Addresses/5
+        // GET: api/Attrs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Address>> GetAddress(string id)
+        public async Task<ActionResult<Attr>> GetAttr(string id)
         {
-            var address = await _context.Addresses.FindAsync(id);
+            var attr = await _context.Attrs.FindAsync(id);
 
-            if (address == null)
+            if (attr == null)
             {
                 return NotFound();
             }
 
-            return address;
+            return attr;
         }
 
-        // PUT: api/Addresses/5
+        // PUT: api/Attrs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAddress(string id, Address address)
+        public async Task<IActionResult> PutAttr(string id, Attr attr)
         {
-            if (id != address.AddressId)
+            if (id != attr.AttrId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(address).State = EntityState.Modified;
+            _context.Entry(attr).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace EaglesAPI.Controllers.UD
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AddressExists(id))
+                if (!AttrExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace EaglesAPI.Controllers.UD
             return NoContent();
         }
 
-        // POST: api/Addresses
+        // POST: api/Attrs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Address>> PostAddress(Address address)
+        public async Task<ActionResult<Attr>> PostAttr(Attr attr)
         {
-            _context.Addresses.Add(address);
+            _context.Attrs.Add(attr);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAddress", new { id = address.AddressId }, address);
+            return CreatedAtAction("GetAttr", new { id = attr.AttrId }, attr);
         }
 
-        // DELETE: api/Addresses/5
+        // DELETE: api/Attrs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAddress(string id)
+        public async Task<IActionResult> DeleteAttr(string id)
         {
-            var address = await _context.Addresses.FindAsync(id);
-            if (address == null)
+            var attr = await _context.Attrs.FindAsync(id);
+            if (attr == null)
             {
                 return NotFound();
             }
 
-            _context.Addresses.Remove(address);
+            _context.Attrs.Remove(attr);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AddressExists(string id)
+        private bool AttrExists(string id)
         {
-            return _context.Addresses.Any(e => e.AddressId == id);
+            return _context.Attrs.Any(e => e.AttrId == id);
         }
     }
 }
